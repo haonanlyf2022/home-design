@@ -5,7 +5,18 @@
       "Bash(rtk find *)",
       "Bash(/Users/mac/.claude/plugins/cache/superpowers-marketplace/superpowers/5.0.7/skills/brainstorming/scripts/start-server.sh *)",
       "Bash(git init *)",
-      "Bash(rtk git *)"
+      "Bash(rtk git *)",
+      "Bash(rtk proxy *)",
+      "Bash(npm create *)",
+      "Bash(yes y *)",
+      "Bash(mktemp *)",
+      "Bash(cp -n /Users/mac/Downloads/Study/ClaudeStudy/20260503_myhome/var/folders/j4/jrm1nzk153dfp85stlzcl5lc0000gn/T/tmp.OMs5RMsvw9/.gitignore /Users/mac/Downloads/Study/ClaudeStudy/20260503_myhome/)",
+      "Bash(cp -n /Users/mac/Downloads/Study/ClaudeStudy/20260503_myhome/var/folders/j4/jrm1nzk153dfp85stlzcl5lc0000gn/T/tmp.OMs5RMsvw9/README.md /Users/mac/Downloads/Study/ClaudeStudy/20260503_myhome/)",
+      "Bash(cp -r /Users/mac/Downloads/Study/ClaudeStudy/20260503_myhome/var/folders/j4/jrm1nzk153dfp85stlzcl5lc0000gn/T/tmp.OMs5RMsvw9/public /Users/mac/Downloads/Study/ClaudeStudy/20260503_myhome/)",
+      "Bash(cp -r /Users/mac/Downloads/Study/ClaudeStudy/20260503_myhome/var/folders/j4/jrm1nzk153dfp85stlzcl5lc0000gn/T/tmp.OMs5RMsvw9/src /Users/mac/Downloads/Study/ClaudeStudy/20260503_myhome/)",
+      "Bash(npm install *)",
+      "Bash(rtk tsc *)",
+      "Bash(timeout 10 npm run dev)"
     ]
   }
 }
