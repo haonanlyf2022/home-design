@@ -30,7 +30,7 @@ html, body, #root { height: 100%; font-family: -apple-system, BlinkMacSystemFont
 
 /* Main Canvas */
 .main-canvas { flex: 1; overflow: hidden; background: #fafafa; }
-.floorplan-container { width: 100%; height: 100%; }
+.floorplan-container { width: 100%; height: 100%; position: relative; }
 
 /* Wall slider */
 .wall-slider input[type="range"] { accent-color: #1976d2; }

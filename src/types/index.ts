@@ -31,6 +31,7 @@ export interface Room {
   fillColor: string;
   bayWindow: BayWindow;
   doors: Door[];
+  imageUrl?: string;      // 本地背景图片 data URL
 }
 
 export interface WallConfig {
@@ -58,6 +59,7 @@ export interface PlacedModule {
   y: number;              // SVG px
   rotation: Rotation;
   label?: string;
+  imageUrl?: string;      // 本地图片 data URL
 }
 
 export interface AppState {

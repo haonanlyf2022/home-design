@@ -15,6 +15,7 @@ interface Props {
   buildingHeight: number;
   onModuleSelect: (id: string | null) => void;
   onModuleMove: (id: string, dx: number, dy: number) => void;
+  onRoomMove: (id: string, dx: number, dy: number) => void;
   onPlaceModule?: (template: any, x: number, y: number) => void;
   onScaleChange: (scale: number) => void;
 }
@@ -22,11 +23,12 @@ interface Props {
 export default function FloorPlan({
   rooms, placedModules, selectedModuleId, scale,
   buildingWidth, buildingHeight,
-  onModuleSelect, onModuleMove, onPlaceModule,
+  onModuleSelect, onModuleMove, onRoomMove, onPlaceModule,
   onScaleChange,
 }: Props) {
   const S = SCALE_CM_TO_PX;
   const { drag, startDrag, onDrag, endDrag } = useDragDrop();
+  const { drag: roomDrag, startDrag: startRoomDrag, onDrag: onRoomDrag, endDrag: endRoomDrag } = useDragDrop();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -45,9 +47,22 @@ export default function FloorPlan({
     }
   }, [drag, onDrag, endDrag, onModuleMove]);
 
-  const masterBath = rooms.find(r => r.id === 'master-bath');
-  const masterBathEast = masterBath ? masterBath.ewWidth * S : 0;
-  const masterBathSouth = masterBath ? masterBath.nsLength * S : 0;
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (roomDrag?.isDragging) {
+        onRoomDrag(e.clientX, e.clientY, onRoomMove);
+      }
+    };
+    const handleMouseUp = () => endRoomDrag();
+    if (roomDrag?.isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [roomDrag, onRoomDrag, endRoomDrag, onRoomMove]);
 
   const padding = 60;
   const minY = Math.min(0, ...rooms.map(r => r.y));
@@ -80,13 +95,6 @@ export default function FloorPlan({
     onPlaceModule(template, svgPt.x, svgPt.y);
   };
 
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    const newScale = Math.max(0.3, Math.min(3, scale + delta));
-    onScaleChange(newScale);
-  };
-
   // Rooms rendering order: corridor first (bottom), then master bed, then others, then master bath (top)
   const renderOrder = ['corridor', 'master-bed', 'study', 'public-bath', 'kitchen', 'entryway',
     'second-bed', 'living-dining', 'balcony', 'master-bath'];
@@ -99,11 +107,11 @@ export default function FloorPlan({
     <div className="floorplan-container">
       <svg
         viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`}
-        style={{ width: '100%', height: '100%', background: '#fafafa' }}
+        preserveAspectRatio="xMidYMid meet"
+        style={{ width: '100%', height: '100%', background: '#fafafa', display: 'block' }}
         onClick={handleSvgClick}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        onWheel={handleWheel}
       >
         <g transform={`scale(${scale})`} transform-origin="0 0">
           {/* Background */}
@@ -114,9 +122,7 @@ export default function FloorPlan({
             <RoomShape
               key={r.id}
               room={r}
-              isMasterBed={r.id === 'master-bed'}
-              masterBathEast={masterBathEast}
-              masterBathSouth={masterBathSouth}
+              onRoomMoveStart={startRoomDrag}
             />
           ))}
 
@@ -139,7 +145,7 @@ export default function FloorPlan({
             if (r.id === 'corridor') return null;
             return (
               <text key={`label-${r.id}`} x={cx} y={cy} textAnchor="middle"
-                fontSize={12} fill="#333" fontWeight="bold">
+                fontSize={50} fill="#333" fontWeight="bold">
                 {r.name}
               </text>
             );
@@ -174,6 +180,23 @@ export default function FloorPlan({
           {Math.round(scale * 100)}%
         </text>
       </svg>
+      <div style={{
+        position: 'absolute', top: 16, left: 16,
+        display: 'flex', gap: 4, zIndex: 10,
+      }}>
+        <button onClick={() => onScaleChange(Math.max(0.3, scale - 0.1))}
+          style={{
+            width: 32, height: 32, fontSize: 18, cursor: 'pointer',
+            background: '#fff', border: '1px solid #ccc', borderRadius: 4,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>−</button>
+        <button onClick={() => onScaleChange(Math.min(3, scale + 0.1))}
+          style={{
+            width: 32, height: 32, fontSize: 18, cursor: 'pointer',
+            background: '#fff', border: '1px solid #ccc', borderRadius: 4,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>+</button>
+      </div>
     </div>
   );
 }

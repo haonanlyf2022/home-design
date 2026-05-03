@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { ModuleTemplate, WallConfig, PlacedModule } from './types';
+import type { ModuleTemplate, PlacedModule, Room } from './types';
 import { computeLayout } from './utils/layout';
 import FloorPlan from './components/FloorPlan';
 import SidePanel from './components/SidePanel';
@@ -9,19 +9,21 @@ let nextModuleId = 1;
 const genModuleId = () => `pm-${nextModuleId++}`;
 
 function App() {
-  const [wallConfig, setWallConfig] = useState<WallConfig>({
-    outerThickness: 240,
-    innerThickness: 120,
-  });
-  const [layout, setLayout] = useState(() => computeLayout(wallConfig));
+  const [layout] = useState(() => computeLayout());
   const [rooms, setRooms] = useState(layout.rooms);
   const [placedModules, setPlacedModules] = useState<PlacedModule[]>([]);
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
   const [scale, setScale] = useState(1);
 
-  const handleRoomChange = (id: string, nsLength: number, ewWidth: number) => {
+  const handleRoomChange = (id: string, updates: Partial<Room>) => {
     setRooms(prev =>
-      prev.map(r => (r.id === id ? { ...r, nsLength, ewWidth } : r))
+      prev.map(r => (r.id === id ? { ...r, ...updates } : r))
+    );
+  };
+
+  const handleRoomMove = (id: string, dx: number, dy: number) => {
+    setRooms(prev =>
+      prev.map(r => (r.id === id ? { ...r, x: r.x + dx / scale, y: r.y + dy / scale } : r))
     );
   };
 
@@ -61,18 +63,6 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedModuleId]);
 
-  const handleWallConfigChange = (newConfig: WallConfig) => {
-    setWallConfig(newConfig);
-    const newLayout = computeLayout(newConfig);
-    setLayout(newLayout);
-    setRooms(prev =>
-      newLayout.rooms.map(nr => {
-        const existing = prev.find(r => r.id === nr.id);
-        return existing ? { ...nr, nsLength: existing.nsLength, ewWidth: existing.ewWidth } : nr;
-      })
-    );
-  };
-
   const handleScaleChange = (newScale: number) => {
     setScale(newScale);
   };
@@ -84,10 +74,8 @@ function App() {
       <div className="side-panel">
         <SidePanel
           rooms={rooms}
-          wallConfig={wallConfig}
           selectedModule={selectedModule}
           onRoomChange={handleRoomChange}
-          onWallConfigChange={handleWallConfigChange}
           onPlaceModule={handlePlaceModule}
           onModuleChange={handleModuleChange}
           onModuleDelete={handleModuleDelete}
@@ -108,6 +96,7 @@ function App() {
             );
           }}
           onPlaceModule={handlePlaceModule}
+          onRoomMove={handleRoomMove}
           onScaleChange={handleScaleChange}
         />
       </div>

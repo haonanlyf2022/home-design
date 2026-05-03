@@ -38,13 +38,25 @@ export default function PlacedModule({ module: pm, isSelected, onSelect, onMoveS
     <g transform={`translate(${pm.x},${pm.y}) rotate(${pm.rotation})`}
       onMouseDown={handleMouseDown}
       style={{ cursor: 'move' }}>
-      <rect x={0} y={0} width={w} height={h}
-        fill={color} fillOpacity={0.8}
-        stroke={isSelected ? '#1976d2' : '#455a64'}
-        strokeWidth={isSelected ? 2.5 : 1} rx={2} />
-      <text x={w / 2} y={h / 2 + 4} textAnchor="middle" fontSize={8} fill="white">
-        {pm.label || ''}
-      </text>
+      {pm.imageUrl ? (
+        <>
+          <image href={pm.imageUrl} x={0} y={0} width={w} height={h}
+            preserveAspectRatio="xMidYMid slice" />
+          <rect x={0} y={0} width={w} height={h}
+            fill="none" stroke={isSelected ? '#1976d2' : '#455a64'}
+            strokeWidth={isSelected ? 2.5 : 1} rx={2} />
+        </>
+      ) : (
+        <>
+          <rect x={0} y={0} width={w} height={h}
+            fill={color} fillOpacity={0.8}
+            stroke={isSelected ? '#1976d2' : '#455a64'}
+            strokeWidth={isSelected ? 2.5 : 1} rx={2} />
+          <text x={w / 2} y={h / 2 + 4} textAnchor="middle" fontSize={50} fill="white">
+            {pm.label || ''}
+          </text>
+        </>
+      )}
     </g>
   );
 }

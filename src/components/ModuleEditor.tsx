@@ -66,6 +66,31 @@ export default function ModuleEditor({ module, onChange, onDelete }: Props) {
         />
       </label>
 
+      <label style={{ display: 'block', marginTop: 8, fontSize: 12 }}>
+        背景图
+        <input
+          type="file" accept="image/*"
+          style={{ marginLeft: 8, fontSize: 11 }}
+          onChange={e => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => onChange(module.id, { imageUrl: reader.result as string });
+            reader.readAsDataURL(file);
+          }}
+        />
+      </label>
+      {module.imageUrl && (
+        <button
+          onClick={() => onChange(module.id, { imageUrl: undefined })}
+          style={{
+            marginTop: 4, padding: '2px 8px', fontSize: 11, cursor: 'pointer',
+            background: '#eee', border: '1px solid #ccc', borderRadius: 3,
+          }}>
+          清除背景图
+        </button>
+      )}
+
       <button
         onClick={() => onDelete(module.id)}
         style={{
