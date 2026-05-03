@@ -25,13 +25,13 @@ function App() {
   let nextModuleId = 1;
   const genModuleId = () => `pm-${nextModuleId++}`;
 
-  const handlePlaceModule = (template: ModuleTemplate) => {
+  const handlePlaceModule = (template: ModuleTemplate, x?: number, y?: number) => {
     const newModule: PlacedModule = {
       id: genModuleId(),
       templateId: template.id,
       nsLength: template.nsLength,
       ewWidth: template.ewWidth,
-      x: 200, y: 200,
+      x: x ?? 200, y: y ?? 200,
       rotation: 0,
       label: template.name,
     };

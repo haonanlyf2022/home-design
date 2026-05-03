@@ -10,7 +10,7 @@ interface Props {
   selectedModule: PlacedModule | null;
   onRoomChange: (id: string, ns: number, ew: number) => void;
   onWallConfigChange: (config: WallConfig) => void;
-  onPlaceModule: (template: ModuleTemplate) => void;
+  onPlaceModule: (template: ModuleTemplate, x?: number, y?: number) => void;
 }
 
 export default function SidePanel({

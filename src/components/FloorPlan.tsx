@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import { Room, PlacedModule, SCALE_CM_TO_PX } from '../types';
 import RoomShape from './RoomShape';
 import DoorWindow from './DoorWindow';
+import { useDragDrop } from '../hooks/useDragDrop';
+import PlacedModuleComponent from './PlacedModule';
 
 interface Props {
   rooms: Room[];
@@ -20,6 +23,25 @@ export default function FloorPlan({
   onModuleSelect, onModuleMove, onPlaceModule,
 }: Props) {
   const S = SCALE_CM_TO_PX;
+  const { drag, startDrag, onDrag, endDrag } = useDragDrop();
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (drag?.isDragging) {
+        onDrag(e.clientX, e.clientY, onModuleMove);
+      }
+    };
+    const handleMouseUp = () => endDrag();
+    if (drag?.isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [drag, onDrag, endDrag, onModuleMove]);
+
   const masterBath = rooms.find(r => r.id === 'master-bath');
   const masterBathEast = masterBath ? masterBath.ewWidth * S : 0;
   const masterBathSouth = masterBath ? masterBath.nsLength * S : 0;
@@ -122,17 +144,13 @@ export default function FloorPlan({
 
         {/* Placed modules */}
         {placedModules.map(pm => (
-          <g key={pm.id} transform={`translate(${pm.x},${pm.y}) rotate(${pm.rotation})`}
-            onClick={(e) => { e.stopPropagation(); onModuleSelect(pm.id); }}
-            style={{ cursor: 'pointer', opacity: pm.id === selectedModuleId ? 1 : 0.85 }}>
-            <rect x={0} y={0} width={pm.ewWidth * S} height={pm.nsLength * S}
-              fill="#78909c" stroke={pm.id === selectedModuleId ? '#1976d2' : '#455a64'}
-              strokeWidth={pm.id === selectedModuleId ? 2.5 : 1} rx={2} />
-            <text x={(pm.ewWidth * S) / 2} y={(pm.nsLength * S) / 2 + 4}
-              textAnchor="middle" fontSize={8} fill="white">
-              {pm.label || ''}
-            </text>
-          </g>
+          <PlacedModuleComponent
+            key={pm.id}
+            module={pm}
+            isSelected={pm.id === selectedModuleId}
+            onSelect={onModuleSelect}
+            onMoveStart={startDrag}
+          />
         ))}
 
         {/* North indicator */}
