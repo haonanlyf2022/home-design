@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { WallConfig, PlacedModule } from './types';
+import { ModuleTemplate, WallConfig, PlacedModule } from './types';
 import { computeLayout } from './utils/layout';
 import FloorPlan from './components/FloorPlan';
 import SidePanel from './components/SidePanel';
@@ -22,14 +22,35 @@ function App() {
     );
   };
 
+  let nextModuleId = 1;
+  const genModuleId = () => `pm-${nextModuleId++}`;
+
+  const handlePlaceModule = (template: ModuleTemplate) => {
+    const newModule: PlacedModule = {
+      id: genModuleId(),
+      templateId: template.id,
+      nsLength: template.nsLength,
+      ewWidth: template.ewWidth,
+      x: 200, y: 200,
+      rotation: 0,
+      label: template.name,
+    };
+    setPlacedModules(prev => [...prev, newModule]);
+    setSelectedModuleId(newModule.id);
+  };
+
+  const selectedModule = placedModules.find(p => p.id === selectedModuleId) ?? null;
+
   return (
     <div className="app">
       <div className="side-panel">
         <SidePanel
           rooms={rooms}
           wallConfig={wallConfig}
+          selectedModule={selectedModule}
           onRoomChange={handleRoomChange}
           onWallConfigChange={setWallConfig}
+          onPlaceModule={handlePlaceModule}
         />
       </div>
       <div className="main-canvas">
