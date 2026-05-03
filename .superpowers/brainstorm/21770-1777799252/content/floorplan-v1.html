@@ -1,0 +1,101 @@
+<h2>我理解的户型布局</h2>
+<p class="subtitle">请确认房间位置和形状是否正确，尤其注意厨房和公共卫生间的互嵌关系</p>
+
+<div class="mockup">
+  <div class="mockup-header">户型俯视图（上北下南）</div>
+  <div class="mockup-body">
+    <div style="
+      display: grid;
+      grid-template-columns: 140px 80px 110px 90px 80px;
+      grid-template-rows: 90px 120px 100px 110px 90px;
+      gap: 2px;
+      padding: 20px;
+      background: #f0f0f0;
+      font-family: sans-serif;
+      font-size: 11px;
+      width: fit-content;
+      margin: 0 auto;
+    ">
+      <!-- Row 1: North side rooms -->
+      <div style="grid-row:1/3; grid-column:1; background:#b3d9ff; border:2px solid #333; display:flex; align-items:center; justify-content:center; text-align:center; position:relative;">
+        主卧卫生间
+        <span style="position:absolute; top:2px; left:50%; transform:translateX(-50%); font-size:9px; color:#666;">▲飘窗</span>
+      </div>
+      <div style="grid-row:1/3; grid-column:2; background:#c9e6c9; border:2px solid #333; display:flex; align-items:center; justify-content:center; text-align:center; position:relative;">
+        书房
+        <span style="position:absolute; top:2px; left:50%; transform:translateX(-50%); font-size:9px; color:#666;">▲飘窗</span>
+      </div>
+      <div style="grid-row:1/3; grid-column:3; background:#ffe0b2; border:2px solid #333; display:flex; align-items:center; justify-content:center; text-align:center; position:relative;">
+        公卫
+        <span style="position:absolute; top:2px; left:50%; transform:translateX(-50%); font-size:9px; color:#666;">▲飘窗</span>
+      </div>
+      <div style="grid-row:1/3; grid-column:4/6; background:#ffccbc; border:2px solid #333; display:flex; align-items:center; justify-content:center; text-align:center; position:relative;">
+        开放式厨房
+        <span style="position:absolute; bottom:2px; right:4px; font-size:9px; color:#999;">SW角与公卫NE角互嵌</span>
+      </div>
+
+      <!-- Row 2-3: Middle section -->
+      <div style="grid-row:3/5; grid-column:1; background:#bbdefb; border:2px solid #333; display:flex; align-items:center; justify-content:center; text-align:center; position:relative;">
+        主卧
+        <span style="position:absolute; bottom:2px; left:50%; transform:translateX(-50%); font-size:9px; color:#666;">▼飘窗</span>
+      </div>
+      <div style="grid-row:3/5; grid-column:2; background:#e0e0e0; border:2px dashed #666; display:flex; align-items:center; justify-content:center; writing-mode:vertical-rl; text-orientation:mixed;">
+        走道
+      </div>
+      <div style="grid-row:3/5; grid-column:3/6; background:#fff9c4; border:2px solid #333; display:flex; align-items:center; justify-content:center; text-align:center;">
+        客餐厅
+      </div>
+
+      <!-- Row 4-5: South section -->
+      <div style="grid-row:5; grid-column:1; background:#c8e6c9; border:2px solid #333; display:flex; align-items:center; justify-content:center; text-align:center; position:relative;">
+        次卧
+        <span style="position:absolute; bottom:2px; left:50%; transform:translateX(-50%); font-size:9px; color:#666;">▼飘窗</span>
+      </div>
+      <div style="grid-row:5; grid-column:2; background:#e0e0e0; border:2px dashed #666;"></div>
+      <div style="grid-row:5; grid-column:3/6; background:#b2dfdb; border:2px solid #333; display:flex; align-items:center; justify-content:center;">
+        阳台
+      </div>
+
+      <!-- Entry door marker -->
+      <div style="grid-row:1; grid-column:5; position:relative; z-index:10; pointer-events:none;">
+        <div style="position:absolute; right:-35px; top:10px; font-size:9px; white-space:nowrap;">
+          🚪入户门
+          <br>→朝南
+        </div>
+      </div>
+      <div style="grid-row:1/3; grid-column:5; position:relative;">
+        <div style="position:absolute; right:-2px; top:20px; bottom:20px; width:18px; background:#8d6e63; border:2px solid #5d4037; display:flex; align-items:center; justify-content:center; writing-mode:vertical-rl; font-size:8px; color:white;">
+          玄关
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:20px;">
+  <h3>关键疑问</h3>
+  <ul>
+    <li>厨房和公共卫生间的互嵌关系是否准确？（当前简化处理，未体现不规则形状）</li>
+    <li>入户门具体在玄关的东侧还是南侧？</li>
+    <li>主卧是走道西端的尽头，主卧门朝东开？</li>
+    <li>次卧在走道南面，次卧门朝北开？</li>
+    <li>书房和公卫在走道北面，门都朝南开？</li>
+  </ul>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="layout-ok" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>布局基本正确，可以继续</h3>
+      <p>位置关系没问题，细节后续调整</p>
+    </div>
+  </div>
+  <div class="option" data-choice="layout-wrong" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>布局有误需要修正</h3>
+      <p>我会在终端中详细说明问题</p>
+    </div>
+  </div>
+</div>

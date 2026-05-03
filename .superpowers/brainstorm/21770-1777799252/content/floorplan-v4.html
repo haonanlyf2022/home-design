@@ -1,0 +1,158 @@
+<h2>户型图（按尺寸数据绘制）</h2>
+<p class="subtitle">比例 1m=40px，标注尺寸和门窗位置</p>
+
+<div class="mockup">
+  <div class="mockup-header">精确尺寸户型图</div>
+  <div class="mockup-body">
+    <svg width="620" height="520" viewBox="-30 -60 620 520" style="display:block; margin:0 auto; background:#fafafa;">
+      <!-- ====== 坐标说明: 原点在建筑西北角, Y轴向南, X轴向东 ====== -->
+
+      <!-- 建筑外轮廓 -->
+      <rect x="0" y="0" width="450" height="210" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="5,3" opacity="0.5"/>
+
+      <!-- ========== 主卧卫生间 (NW, 2.7×1.55) ========== -->
+      <rect x="0" y="0" width="62" height="108" fill="#b3d9ff" stroke="#333" stroke-width="2"/>
+      <text x="31" y="50" text-anchor="middle" font-size="9" fill="#333">主卫</text>
+      <text x="31" y="64" text-anchor="middle" font-size="7" fill="#666">2.7×1.55</text>
+      <!-- 飘窗 -->
+      <line x1="10" y1="2" x2="52" y2="2" stroke="#1976d2" stroke-width="3"/>
+      <text x="31" y="-4" text-anchor="middle" font-size="7" fill="#1976d2">飘窗</text>
+
+      <!-- ========== 主卧 (4.2×3.0) ========== -->
+      <rect x="0" y="0" width="120" height="168" fill="#bbdefb" fill-opacity="0.5" stroke="#333" stroke-width="2"/>
+      <text x="90" y="95" text-anchor="middle" font-size="10" fill="#333" font-weight="bold">主卧</text>
+      <text x="90" y="110" text-anchor="middle" font-size="7" fill="#666">4.2×3.0</text>
+      <!-- 南飘窗 -->
+      <line x1="20" y1="166" x2="100" y2="166" stroke="#1976d2" stroke-width="3"/>
+      <text x="60" y="180" text-anchor="middle" font-size="7" fill="#1976d2">飘窗</text>
+
+      <!-- ========== 书房 (2.7×2.4) - 西半在卧室上方, 东半在过道上方 ========== -->
+      <rect x="72" y="0" width="96" height="108" fill="#c9e6c9" stroke="#333" stroke-width="2"/>
+      <text x="120" y="50" text-anchor="middle" font-size="9" fill="#333">书房</text>
+      <text x="120" y="64" text-anchor="middle" font-size="7" fill="#666">2.7×2.4</text>
+      <!-- 北飘窗 -->
+      <line x1="82" y1="2" x2="158" y2="2" stroke="#388e3c" stroke-width="3"/>
+      <text x="120" y="-4" text-anchor="middle" font-size="7" fill="#388e3c">飘窗</text>
+
+      <!-- 主卧/书房分隔虚线 -->
+      <line x1="72" y1="108" x2="72" y2="168" stroke="#999" stroke-width="1" stroke-dasharray="4,4"/>
+      <text x="66" y="138" text-anchor="middle" font-size="6" fill="#999" transform="rotate(-90,66,138)">主卧东墙(书房一半处)</text>
+
+      <!-- ========== 公卫 (2.1×1.55) ========== -->
+      <rect x="168" y="0" width="62" height="84" fill="#ffe0b2" stroke="#333" stroke-width="2"/>
+      <text x="199" y="38" text-anchor="middle" font-size="9" fill="#333">公卫</text>
+      <text x="199" y="52" text-anchor="middle" font-size="7" fill="#666">2.1×1.55</text>
+      <!-- 北飘窗 -->
+      <line x1="178" y1="2" x2="220" y2="2" stroke="#e65100" stroke-width="3"/>
+      <text x="199" y="-4" text-anchor="middle" font-size="7" fill="#e65100">飘窗</text>
+
+      <!-- ========== 厨房 (3.4×1.6) - NE区块, 向北凸出 ========== -->
+      <rect x="232" y="-68" width="64" height="136" fill="#ffccbc" stroke="#333" stroke-width="2"/>
+      <text x="264" y="0" text-anchor="middle" font-size="9" fill="#333">厨房</text>
+      <text x="264" y="14" text-anchor="middle" font-size="7" fill="#666">3.4×1.6</text>
+      <text x="264" y="28" text-anchor="middle" font-size="7" fill="#c44">(开放式)</text>
+      <!-- 西窗 -->
+      <line x1="232" y1="-30" x2="232" y2="30" stroke="#e65100" stroke-width="3"/>
+      <text x="225" y="0" text-anchor="end" font-size="7" fill="#e65100">窗</text>
+      <!-- 厨房SW角和公卫NE角互嵌标示 -->
+      <path d="M232,68 L245,68 L245,84" fill="none" stroke="#e53935" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="210" y="90" text-anchor="middle" font-size="6" fill="#e53935">互嵌</text>
+
+      <!-- ========== 玄关 (3.5×1.6) - 厨房东侧 ========== -->
+      <rect x="296" y="-70" width="64" height="140" fill="#d7ccc8" stroke="#333" stroke-width="2"/>
+      <text x="328" y="0" text-anchor="middle" font-size="9" fill="#333">玄关</text>
+      <text x="328" y="14" text-anchor="middle" font-size="7" fill="#666">3.5×1.6</text>
+      <!-- 入户门(北墙) -->
+      <line x1="318" y1="-70" x2="338" y2="-70" stroke="#5d4037" stroke-width="3"/>
+      <text x="328" y="-76" text-anchor="middle" font-size="7" fill="#5d4037">🚪入户门(朝南)</text>
+      <!-- 厨房门(西侧/玄关西墙) -->
+      <line x1="296" y1="-30" x2="296" y2="-10" stroke="#8d6e63" stroke-width="2"/>
+      <text x="290" y="-20" text-anchor="end" font-size="6" fill="#8d6e63">厨房门</text>
+
+      <!-- ========== 过道 (2.8×1.5) ========== -->
+      <rect x="120" y="108" width="112" height="60" fill="#e0e0e0" stroke="#666" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="176" y="135" text-anchor="middle" font-size="9" fill="#666">走道</text>
+      <text x="176" y="150" text-anchor="middle" font-size="7" fill="#999">2.8×1.5</text>
+
+      <!-- 走道各门标示 -->
+      <!-- 主卧门(西墙) -->
+      <line x1="120" y1="130" x2="120" y2="150" stroke="#5d4037" stroke-width="2"/>
+      <text x="114" y="140" text-anchor="end" font-size="6" fill="#5d4037">主卧门</text>
+      <!-- 公卫门(北墙偏东) -->
+      <line x1="200" y1="108" x2="215" y2="108" stroke="#5d4037" stroke-width="2"/>
+      <text x="208" y="104" text-anchor="middle" font-size="6" fill="#5d4037">公卫门</text>
+      <!-- 书房门(北墙偏西) -->
+      <line x1="150" y1="108" x2="165" y2="108" stroke="#5d4037" stroke-width="2"/>
+      <text x="158" y="104" text-anchor="middle" font-size="6" fill="#5d4037">书房门</text>
+
+      <!-- ========== 客餐厅 (5.45×3.2) ========== -->
+      <rect x="232" y="70" width="128" height="128" fill="#fff9c4" stroke="#333" stroke-width="2"/>
+      <text x="296" y="125" text-anchor="middle" font-size="10" fill="#333" font-weight="bold">客餐厅</text>
+      <text x="296" y="140" text-anchor="middle" font-size="7" fill="#666">5.45×3.2</text>
+      <!-- 阳台门(南墙) -->
+      <line x1="280" y1="198" x2="310" y2="198" stroke="#8d6e63" stroke-width="2"/>
+      <text x="295" y="212" text-anchor="middle" font-size="6" fill="#8d6e63">阳台门</text>
+
+      <!-- ========== 次卧 (3.05×2.5) - 走道南面 ========== -->
+      <rect x="120" y="168" width="100" height="100" fill="#c8e6c9" stroke="#333" stroke-width="2"/>
+      <text x="170" y="212" text-anchor="middle" font-size="9" fill="#333">次卧</text>
+      <text x="170" y="228" text-anchor="middle" font-size="7" fill="#666">3.05×2.5</text>
+      <!-- 南飘窗 -->
+      <line x1="135" y1="266" x2="205" y2="266" stroke="#388e3c" stroke-width="3"/>
+      <text x="170" y="280" text-anchor="middle" font-size="7" fill="#388e3c">飘窗</text>
+      <!-- 次卧门(走道南墙偏东) -->
+      <line x1="190" y1="168" x2="205" y2="168" stroke="#5d4037" stroke-width="2"/>
+      <text x="200" y="164" text-anchor="middle" font-size="6" fill="#5d4037">次卧门</text>
+
+      <!-- ========== 阳台 (3.2×1.35) - 客餐厅南面, 凸出 ========== -->
+      <rect x="232" y="198" width="128" height="54" fill="#b2dfdb" stroke="#333" stroke-width="2"/>
+      <text x="296" y="222" text-anchor="middle" font-size="9" fill="#333">阳台</text>
+      <text x="296" y="236" text-anchor="middle" font-size="7" fill="#666">3.2×1.35</text>
+
+      <!-- ========== 标注线 ========== -->
+      <!-- 南边对齐线 -->
+      <line x1="10" y1="268" x2="380" y2="268" stroke="#e53935" stroke-width="2" stroke-dasharray="8,4"/>
+      <text x="390" y="272" font-size="8" fill="#e53935">主卧/次卧/客餐厅 南边齐平</text>
+
+      <!-- 方向指示 -->
+      <text x="420" y="80" font-size="14" fill="#333">北 ↑</text>
+
+      <!-- 尺寸标注: E-W总宽 -->
+      <line x1="0" y1="300" x2="360" y2="300" stroke="#333" stroke-width="1"/>
+      <line x1="0" y1="295" x2="0" y2="305" stroke="#333" stroke-width="1"/>
+      <line x1="360" y1="295" x2="360" y2="305" stroke="#333" stroke-width="1"/>
+      <text x="180" y="314" text-anchor="middle" font-size="8" fill="#333">约9.0m (E-W)</text>
+
+      <!-- 面积标注 -->
+      <text x="420" y="180" font-size="9" fill="#666">建筑面积: 99㎡</text>
+    </svg>
+  </div>
+</div>
+
+<div class="section" style="margin-top:20px;">
+  <h3>尺寸对应关系</h3>
+  <table style="width:100%; font-size:12px; border-collapse:collapse;">
+    <tr style="background:#f5f5f5;"><th style="padding:4px 8px; text-align:left;">房间</th><th style="padding:4px 8px;">长(m)</th><th style="padding:4px 8px;">宽(m)</th><th style="padding:4px 8px;">面积(㎡)</th><th style="padding:4px 8px;">方位</th></tr>
+    <tr><td style="padding:4px 8px;">主卧</td><td style="padding:4px 8px; text-align:center;">4.2</td><td style="padding:4px 8px; text-align:center;">3.0</td><td style="padding:4px 8px; text-align:center;">12.6</td><td style="padding:4px 8px;">西南</td></tr>
+    <tr><td style="padding:4px 8px;">次卧</td><td style="padding:4px 8px; text-align:center;">3.05</td><td style="padding:4px 8px; text-align:center;">2.5</td><td style="padding:4px 8px; text-align:center;">7.63</td><td style="padding:4px 8px;">南中</td></tr>
+    <tr><td style="padding:4px 8px;">客餐厅</td><td style="padding:4px 8px; text-align:center;">5.45</td><td style="padding:4px 8px; text-align:center;">3.2</td><td style="padding:4px 8px; text-align:center;">17.44</td><td style="padding:4px 8px;">东南</td></tr>
+    <tr><td style="padding:4px 8px;">厨房</td><td style="padding:4px 8px; text-align:center;">3.4</td><td style="padding:4px 8px; text-align:center;">1.6</td><td style="padding:4px 8px; text-align:center;">5.44</td><td style="padding:4px 8px;">东北(凸出)</td></tr>
+    <tr><td style="padding:4px 8px;">玄关</td><td style="padding:4px 8px; text-align:center;">3.5</td><td style="padding:4px 8px; text-align:center;">1.6</td><td style="padding:4px 8px; text-align:center;">5.6</td><td style="padding:4px 8px;">东北(凸出)</td></tr>
+    <tr><td style="padding:4px 8px;">书房</td><td style="padding:4px 8px; text-align:center;">2.7</td><td style="padding:4px 8px; text-align:center;">2.4</td><td style="padding:4px 8px; text-align:center;">6.48</td><td style="padding:4px 8px;">北中</td></tr>
+    <tr><td style="padding:4px 8px;">主卫</td><td style="padding:4px 8px; text-align:center;">2.7</td><td style="padding:4px 8px; text-align:center;">1.55</td><td style="padding:4px 8px; text-align:center;">4.19</td><td style="padding:4px 8px;">西北</td></tr>
+    <tr><td style="padding:4px 8px;">公卫</td><td style="padding:4px 8px; text-align:center;">2.1</td><td style="padding:4px 8px; text-align:center;">1.55</td><td style="padding:4px 8px; text-align:center;">3.26</td><td style="padding:4px 8px;">北中</td></tr>
+    <tr><td style="padding:4px 8px;">走道</td><td style="padding:4px 8px; text-align:center;">2.8</td><td style="padding:4px 8px; text-align:center;">1.5</td><td style="padding:4px 8px; text-align:center;">4.2</td><td style="padding:4px 8px;">中</td></tr>
+    <tr><td style="padding:4px 8px;">阳台</td><td style="padding:4px 8px; text-align:center;">3.2</td><td style="padding:4px 8px; text-align:center;">1.35</td><td style="padding:4px 8px; text-align:center;">4.32</td><td style="padding:4px 8px;">南(凸出)</td></tr>
+  </table>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="layout-ok" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content"><h3>布局和尺寸基本正确</h3><p>可以继续讨论技术方案</p></div>
+  </div>
+  <div class="option" data-choice="layout-wrong" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content"><h3>还有问题</h3><p>我会在终端中详细说明哪里不对</p></div>
+  </div>
+</div>
