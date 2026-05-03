@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ModuleTemplate, WallConfig, PlacedModule } from './types';
 import { computeLayout } from './utils/layout';
 import FloorPlan from './components/FloorPlan';
@@ -39,6 +39,28 @@ function App() {
     setSelectedModuleId(newModule.id);
   };
 
+  const handleModuleChange = (id: string, updates: Partial<PlacedModule>) => {
+    setPlacedModules(prev =>
+      prev.map(p => (p.id === id ? { ...p, ...updates } : p))
+    );
+  };
+
+  const handleModuleDelete = (id: string) => {
+    setPlacedModules(prev => prev.filter(p => p.id !== id));
+    setSelectedModuleId(null);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Delete' && selectedModuleId) {
+        setPlacedModules(prev => prev.filter(p => p.id !== selectedModuleId));
+        setSelectedModuleId(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedModuleId]);
+
   const selectedModule = placedModules.find(p => p.id === selectedModuleId) ?? null;
 
   return (
@@ -51,6 +73,8 @@ function App() {
           onRoomChange={handleRoomChange}
           onWallConfigChange={setWallConfig}
           onPlaceModule={handlePlaceModule}
+          onModuleChange={handleModuleChange}
+          onModuleDelete={handleModuleDelete}
         />
       </div>
       <div className="main-canvas">
