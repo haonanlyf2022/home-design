@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# home-design - 室内布局模拟器
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+基于 Web 的室内户型布局模拟工具，SVG 俯视平面图，支持房间尺寸自定义、家具家电模块拖放放置。
 
-Currently, two official plugins are available:
+## 功能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **户型图展示** — 10 个空间的俯视平面图（主卧、次卧、客餐厅、厨房、玄关、书房、主卫、公卫、走道、阳台）
+- **尺寸编辑** — 侧边面板修改各房间 N-S/E-W 尺寸（cm 精度），实时更新
+- **模块系统** — 12 个预设模块（家具/家电/插座），支持拖放或双击放置
+- **模块编辑** — 选中模块后可修改尺寸、旋转角度、标签、上传背景图
+- **房间拖拽** — 任意房间可拖动调整位置，支持上传背景图
+- **缩放** — 画布左上角 ± 按钮缩放
 
-## React Compiler
+## 技术栈
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React 18 + TypeScript + Vite + SVG
 
-## Expanding the ESLint configuration
+## 开发
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npx tsc --noEmit  # 类型检查
+npm run build     # 生产构建
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 进度
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- [x] SVG 户型图渲染（房间、门窗、飘窗）
+- [x] 房间尺寸编辑
+- [x] 模块放置（拖拽 + 双击）
+- [x] 模块属性编辑（尺寸/旋转/标签/图片）
+- [x] 房间拖拽 + 背景图上传
+- [x] 画布缩放
+- [ ] 模块 SVG 自定义图形
+- [ ] 自定义模块创建
+- [ ] 方案导出/导入
+- [ ] 单元测试
