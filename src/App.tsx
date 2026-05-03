@@ -61,6 +61,10 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedModuleId]);
 
+  const handleScaleChange = (newScale: number) => {
+    setScale(newScale);
+  };
+
   const selectedModule = placedModules.find(p => p.id === selectedModuleId) ?? null;
 
   return (
@@ -91,6 +95,8 @@ function App() {
               prev.map(p => (p.id === id ? { ...p, x: p.x + dx, y: p.y + dy } : p))
             );
           }}
+          onPlaceModule={handlePlaceModule}
+          onScaleChange={handleScaleChange}
         />
       </div>
     </div>

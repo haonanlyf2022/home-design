@@ -15,12 +15,14 @@ interface Props {
   onModuleSelect: (id: string | null) => void;
   onModuleMove: (id: string, dx: number, dy: number) => void;
   onPlaceModule?: (template: any, x: number, y: number) => void;
+  onScaleChange: (scale: number) => void;
 }
 
 export default function FloorPlan({
   rooms, placedModules, selectedModuleId, scale,
   buildingWidth, buildingHeight,
   onModuleSelect, onModuleMove, onPlaceModule,
+  onScaleChange,
 }: Props) {
   const S = SCALE_CM_TO_PX;
   const { drag, startDrag, onDrag, endDrag } = useDragDrop();
@@ -77,6 +79,13 @@ export default function FloorPlan({
     onPlaceModule(template, svgPt.x, svgPt.y);
   };
 
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    const newScale = Math.max(0.3, Math.min(3, scale + delta));
+    onScaleChange(newScale);
+  };
+
   // Rooms rendering order: corridor first (bottom), then master bed, then others, then master bath (top)
   const renderOrder = ['corridor', 'master-bed', 'study', 'public-bath', 'kitchen', 'entryway',
     'second-bed', 'living-dining', 'balcony', 'master-bath'];
@@ -93,68 +102,76 @@ export default function FloorPlan({
         onClick={handleSvgClick}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
+        onWheel={handleWheel}
       >
-        {/* Background */}
-        <rect x={vbX} y={vbY} width={vbW} height={vbH} fill="#f5f5f5" />
+        <g transform={`scale(${scale})`} transform-origin="0 0">
+          {/* Background */}
+          <rect x={vbX} y={vbY} width={vbW} height={vbH} fill="#f5f5f5" />
 
-        {/* Rooms */}
-        {orderedRooms.map(r => (
-          <RoomShape
-            key={r.id}
-            room={r}
-            isMasterBed={r.id === 'master-bed'}
-            masterBathEast={masterBathEast}
-            masterBathSouth={masterBathSouth}
-          />
-        ))}
+          {/* Rooms */}
+          {orderedRooms.map(r => (
+            <RoomShape
+              key={r.id}
+              room={r}
+              isMasterBed={r.id === 'master-bed'}
+              masterBathEast={masterBathEast}
+              masterBathSouth={masterBathSouth}
+            />
+          ))}
 
-        {/* Doors and bay windows */}
-        {rooms.map(r => (
-          <DoorWindow
-            key={`dw-${r.id}`}
-            doors={r.doors}
-            bayWindow={r.bayWindow}
-            x={r.x} y={r.y}
-            width={r.ewWidth * S}
-            height={r.nsLength * S}
-          />
-        ))}
+          {/* Doors and bay windows */}
+          {rooms.map(r => (
+            <DoorWindow
+              key={`dw-${r.id}`}
+              doors={r.doors}
+              bayWindow={r.bayWindow}
+              x={r.x} y={r.y}
+              width={r.ewWidth * S}
+              height={r.nsLength * S}
+            />
+          ))}
 
-        {/* Room name labels */}
-        {rooms.map(r => {
-          const cx = r.x + (r.ewWidth * S) / 2;
-          const cy = r.y + (r.nsLength * S) / 2;
-          if (r.id === 'corridor') return null;
-          return (
-            <text key={`label-${r.id}`} x={cx} y={cy} textAnchor="middle"
-              fontSize={12} fill="#333" fontWeight="bold">
-              {r.name}
-            </text>
-          );
-        })}
+          {/* Room name labels */}
+          {rooms.map(r => {
+            const cx = r.x + (r.ewWidth * S) / 2;
+            const cy = r.y + (r.nsLength * S) / 2;
+            if (r.id === 'corridor') return null;
+            return (
+              <text key={`label-${r.id}`} x={cx} y={cy} textAnchor="middle"
+                fontSize={12} fill="#333" fontWeight="bold">
+                {r.name}
+              </text>
+            );
+          })}
 
-        {/* South alignment line */}
-        {(() => {
-          const alignIds = ['master-bed', 'second-bed', 'living-dining'];
-          const alignRooms = rooms.filter(r => alignIds.includes(r.id));
-          const southY = Math.max(...alignRooms.map(r => r.y + r.nsLength * S));
-          return <line x1={vbX} y1={southY} x2={vbX + vbW} y2={southY}
-            stroke="#e53935" strokeWidth={2} strokeDasharray="10,5" />;
-        })()}
+          {/* South alignment line */}
+          {(() => {
+            const alignIds = ['master-bed', 'second-bed', 'living-dining'];
+            const alignRooms = rooms.filter(r => alignIds.includes(r.id));
+            const southY = Math.max(...alignRooms.map(r => r.y + r.nsLength * S));
+            return <line x1={vbX} y1={southY} x2={vbX + vbW} y2={southY}
+              stroke="#e53935" strokeWidth={2} strokeDasharray="10,5" />;
+          })()}
 
-        {/* Placed modules */}
-        {placedModules.map(pm => (
-          <PlacedModuleComponent
-            key={pm.id}
-            module={pm}
-            isSelected={pm.id === selectedModuleId}
-            onSelect={onModuleSelect}
-            onMoveStart={startDrag}
-          />
-        ))}
+          {/* Placed modules */}
+          {placedModules.map(pm => (
+            <PlacedModuleComponent
+              key={pm.id}
+              module={pm}
+              isSelected={pm.id === selectedModuleId}
+              onSelect={onModuleSelect}
+              onMoveStart={startDrag}
+            />
+          ))}
 
-        {/* North indicator */}
-        <text x={vbX + vbW - 40} y={vbY + 20} fontSize={14} fill="#333">北 ↑</text>
+          {/* North indicator */}
+          <text x={vbX + vbW - 40} y={vbY + 20} fontSize={14} fill="#333">北 ↑</text>
+        </g>
+
+        {/* Scale indicator (fixed, outside scaled group) */}
+        <text x={vbX + 10} y={vbY + vbH - 10} fontSize={10} fill="#999">
+          {Math.round(scale * 100)}%
+        </text>
       </svg>
     </div>
   );
