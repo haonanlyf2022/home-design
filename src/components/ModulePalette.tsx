@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ModuleTemplate, ModuleCategory } from '../types';
+import type { ModuleTemplate, ModuleCategory } from '../types';
 
 interface Props {
   templates: ModuleTemplate[];

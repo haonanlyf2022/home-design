@@ -1,4 +1,4 @@
-import { ModuleTemplate } from '../types';
+import type { ModuleTemplate } from '../types';
 
 export const moduleTemplates: ModuleTemplate[] = [
   // 家具

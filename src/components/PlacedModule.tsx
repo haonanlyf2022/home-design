@@ -1,4 +1,5 @@
-import { PlacedModule as PM, SCALE_CM_TO_PX } from '../types';
+import { SCALE_CM_TO_PX } from '../types';
+import type { PlacedModule as PM } from '../types';
 
 const categoryColors: Record<string, string> = {
   furniture: '#78909c',

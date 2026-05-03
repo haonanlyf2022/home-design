@@ -1,4 +1,5 @@
-import { Room, SCALE_CM_TO_PX } from '../types';
+import { SCALE_CM_TO_PX } from '../types';
+import type { Room } from '../types';
 
 interface Props {
   room: Room;

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { Room, PlacedModule, SCALE_CM_TO_PX } from '../types';
+import { SCALE_CM_TO_PX } from '../types';
+import type { Room, PlacedModule } from '../types';
 import RoomShape from './RoomShape';
 import DoorWindow from './DoorWindow';
 import { useDragDrop } from '../hooks/useDragDrop';

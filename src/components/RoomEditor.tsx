@@ -1,4 +1,4 @@
-import { Room } from '../types';
+import type { Room } from '../types';
 
 interface Props {
   rooms: Room[];

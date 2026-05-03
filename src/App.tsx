@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ModuleTemplate, WallConfig, PlacedModule } from './types';
+import type { ModuleTemplate, WallConfig, PlacedModule } from './types';
 import { computeLayout } from './utils/layout';
 import FloorPlan from './components/FloorPlan';
 import SidePanel from './components/SidePanel';

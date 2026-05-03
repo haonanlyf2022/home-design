@@ -1,4 +1,4 @@
-import { WallConfig } from '../types';
+import type { WallConfig } from '../types';
 
 interface Props {
   config: WallConfig;

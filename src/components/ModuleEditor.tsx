@@ -1,4 +1,4 @@
-import { PlacedModule, Rotation } from '../types';
+import type { PlacedModule, Rotation } from '../types';
 
 interface Props {
   module: PlacedModule | null;

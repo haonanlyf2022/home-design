@@ -1,4 +1,5 @@
-import { Door, BayWindow, SCALE_CM_TO_PX } from '../types';
+import { SCALE_CM_TO_PX } from '../types';
+import type { Door, BayWindow } from '../types';
 
 interface Props {
   doors: Door[];

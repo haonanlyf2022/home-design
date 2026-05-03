@@ -1,4 +1,4 @@
-import { Room, WallConfig, ModuleTemplate, PlacedModule } from '../types';
+import type { Room, WallConfig, ModuleTemplate, PlacedModule } from '../types';
 import RoomEditor from './RoomEditor';
 import WallThicknessSlider from './WallThicknessSlider';
 import ModulePalette from './ModulePalette';

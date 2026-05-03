@@ -1,4 +1,5 @@
-import { Room, SCALE_CM_TO_PX, WallConfig } from '../types';
+import { SCALE_CM_TO_PX } from '../types';
+import type { Room, WallConfig } from '../types';
 import { roomData } from '../data/rooms';
 
 const S = SCALE_CM_TO_PX;
