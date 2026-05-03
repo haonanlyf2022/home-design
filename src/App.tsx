@@ -5,13 +5,16 @@ import FloorPlan from './components/FloorPlan';
 import SidePanel from './components/SidePanel';
 import './App.css';
 
+let nextModuleId = 1;
+const genModuleId = () => `pm-${nextModuleId++}`;
+
 function App() {
-  const layout = computeLayout();
-  const [rooms, setRooms] = useState(layout.rooms);
   const [wallConfig, setWallConfig] = useState<WallConfig>({
     outerThickness: 240,
     innerThickness: 120,
   });
+  const [layout, setLayout] = useState(() => computeLayout(wallConfig));
+  const [rooms, setRooms] = useState(layout.rooms);
   const [placedModules, setPlacedModules] = useState<PlacedModule[]>([]);
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
   const [scale, setScale] = useState(1);
@@ -21,9 +24,6 @@ function App() {
       prev.map(r => (r.id === id ? { ...r, nsLength, ewWidth } : r))
     );
   };
-
-  let nextModuleId = 1;
-  const genModuleId = () => `pm-${nextModuleId++}`;
 
   const handlePlaceModule = (template: ModuleTemplate, x?: number, y?: number) => {
     const newModule: PlacedModule = {
@@ -61,6 +61,18 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedModuleId]);
 
+  const handleWallConfigChange = (newConfig: WallConfig) => {
+    setWallConfig(newConfig);
+    const newLayout = computeLayout(newConfig);
+    setLayout(newLayout);
+    setRooms(prev =>
+      newLayout.rooms.map(nr => {
+        const existing = prev.find(r => r.id === nr.id);
+        return existing ? { ...nr, nsLength: existing.nsLength, ewWidth: existing.ewWidth } : nr;
+      })
+    );
+  };
+
   const handleScaleChange = (newScale: number) => {
     setScale(newScale);
   };
@@ -75,7 +87,7 @@ function App() {
           wallConfig={wallConfig}
           selectedModule={selectedModule}
           onRoomChange={handleRoomChange}
-          onWallConfigChange={setWallConfig}
+          onWallConfigChange={handleWallConfigChange}
           onPlaceModule={handlePlaceModule}
           onModuleChange={handleModuleChange}
           onModuleDelete={handleModuleDelete}
@@ -92,7 +104,7 @@ function App() {
           onModuleSelect={setSelectedModuleId}
           onModuleMove={(id, dx, dy) => {
             setPlacedModules(prev =>
-              prev.map(p => (p.id === id ? { ...p, x: p.x + dx, y: p.y + dy } : p))
+              prev.map(p => (p.id === id ? { ...p, x: p.x + dx / scale, y: p.y + dy / scale } : p))
             );
           }}
           onPlaceModule={handlePlaceModule}
