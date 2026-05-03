@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { WallConfig, PlacedModule } from './types';
 import { computeLayout } from './utils/layout';
 import FloorPlan from './components/FloorPlan';
+import SidePanel from './components/SidePanel';
 import './App.css';
 
 function App() {
@@ -15,10 +16,21 @@ function App() {
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
   const [scale, setScale] = useState(1);
 
+  const handleRoomChange = (id: string, nsLength: number, ewWidth: number) => {
+    setRooms(prev =>
+      prev.map(r => (r.id === id ? { ...r, nsLength, ewWidth } : r))
+    );
+  };
+
   return (
     <div className="app">
       <div className="side-panel">
-        <p>侧边面板</p>
+        <SidePanel
+          rooms={rooms}
+          wallConfig={wallConfig}
+          onRoomChange={handleRoomChange}
+          onWallConfigChange={setWallConfig}
+        />
       </div>
       <div className="main-canvas">
         <FloorPlan
